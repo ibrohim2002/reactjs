@@ -1,8 +1,7 @@
 import React, { useReducer, useState } from "react";
 
 const Root = () => {
-  const [number, setNumber] = useState(1);
-  const [counter, dispatch] = useReducer((state, action) => {
+  const reducer = (state, action) => {
     switch (action.type) {
       case "plus": {
         return state + 1;
@@ -16,23 +15,23 @@ const Root = () => {
       default:
         return state;
     }
-  }, 0);
+  };
+  const [number, setNumber] = useState(1);
+  const [counter, dispatch] = useReducer(reducer, 0);
   return (
     <div>
       <h1>Count: {counter}</h1>
-      <button onClick={() => dispatch({ type: "plus", payload: number  })}>
+      <button onClick={() => dispatch({ type: "plus", payload: number })}>
         +
       </button>
       <button onClick={() => dispatch({ type: "minus", payload: number })}>
         -
       </button>
-      <button
-        onClick={() => dispatch({ type: "byNumber", payload: number })}
-      >
+      <button onClick={() => dispatch({ type: "byNumber", payload: number })}>
         {number}
       </button>
       <select
-        onClick={(e) => {
+        onChange={(e) => {
           setNumber(+e.target.value);
         }}
         name=""
